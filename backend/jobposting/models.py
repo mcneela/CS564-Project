@@ -5,16 +5,19 @@ from django.db import models
 class Industry(models.Model):
     industry_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=32)
+
 class Company(models.Model):
     company_id = models.AutoField(primary_key=True)
     profile = models.TextField()
     has_logo = models.BooleanField(default=False)
     industry = models.ForeignKey(Industry, on_delete=models.CASCADE)
+
 class Location(models.Model):
     location_id = models.AutoField(primary_key=True)
     city = models.CharField(max_length=24)
     state = models.CharField(max_length=24)
     country = models.CharField(max_length=24)
+
 class Job(models.Model):
     job_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=64)
