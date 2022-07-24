@@ -14,16 +14,16 @@ class Company(models.Model):
 
 class Location(models.Model):
     location_id = models.AutoField(primary_key=True)
-    city = models.CharField(max_length=24)
-    state = models.CharField(max_length=24)
-    country = models.CharField(max_length=24)
+    city = models.CharField(max_length=24, null=True)
+    state = models.CharField(max_length=24, null=True)
+    country = models.CharField(max_length=24, null=True)
 
 class Job(models.Model):
     job_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=64)
     function = models.CharField(max_length=64)
-    salary_min = models.IntegerField()
-    salary_max = models.IntegerField()
+    salary_min = models.IntegerField(null=True)
+    salary_max = models.IntegerField(null=True)
     department = models.CharField(max_length=64)
     benefits = models.TextField()
     description = models.TextField()
