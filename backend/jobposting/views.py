@@ -1,5 +1,8 @@
 from django.shortcuts import render
-from rest_framework import viewsets
+from rest_framework.views import APIView
+from rest_framework import generics
+from rest_framework.response import Response
+from rest_framework import viewsets, authentication, permissions
 from jobposting.models import (
     Job,
     Company,
@@ -35,3 +38,11 @@ class LocationViewSet(viewsets.ModelViewSet):
 class RequirementsViewSet(viewsets.ModelViewSet):
     queryset = Requirements.objects.all()
     serializer_class = RequirementsSerializer
+
+class LocationsInState(APIView):
+    queryset = Location.objects.all()
+    
+    def get(self, request, state, *args, **kwargs):
+        queryset = self.queryset.filter(state=state)
+        serializer = LocationSerializer(queryset, many=True)
+        return Response(data=serializer.data)
