@@ -1,25 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import axios from 'axios';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// allow cross origin requests for running locally
+axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      'name': 'Job Posting App v1',
+    }
+  }
 }
 
 export default App;
