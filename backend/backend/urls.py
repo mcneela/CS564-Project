@@ -17,7 +17,11 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
 from jobposting import views
-from jobposting.views import LocationsInState
+from jobposting.views import (
+    LocationsInCity,
+    LocationsInState,
+    LocationsInCountry
+)
 
 router = routers.DefaultRouter()
 router.register(r'jobs', views.JobViewSet)
@@ -29,5 +33,7 @@ router.register(r'requirements', views.RequirementsViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/locations/', include(router.urls)),
-    path('api/v1/locations/<str:state>/', LocationsInState.as_view())
+    path('api/v1/locations/city/<str:city>/', LocationsInCity.as_view()),
+    path('api/v1/locations/state/<str:state>/', LocationsInState.as_view()),
+    path('api/v1/locations/country/<str:country>/', LocationsInCountry.as_view())
 ]
