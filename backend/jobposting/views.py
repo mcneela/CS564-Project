@@ -46,3 +46,19 @@ class LocationsInState(APIView):
         queryset = self.queryset.filter(state=state)
         serializer = LocationSerializer(queryset, many=True)
         return Response(data=serializer.data)
+
+class LocationsInCountry(APIView):
+    queryset = Location.objects.all()
+    
+    def get(self, request, country, *args, **kwargs):
+        queryset = self.queryset.filter(country=country)
+        serializer = LocationSerializer(queryset, many=True)
+        return Response(data=serializer.data)
+
+class LocationsInCity(APIView):
+    queryset = Location.objects.all()
+    
+    def get(self, request, city, *args, **kwargs):
+        queryset = self.queryset.filter(city=city)
+        serializer = LocationSerializer(queryset, many=True)
+        return Response(data=serializer.data)
