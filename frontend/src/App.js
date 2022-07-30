@@ -10,14 +10,24 @@ class App extends React.Component {
     super();
     this.state = {
       'name': 'Job Posting App v1',
-      'apiUrl': 'http://127.0.0.1:8000/api/v1/'
+      'apiUrl': 'http://127.0.0.1:8000/api/v1/',
+      'allJobs': []
     }
+  }
+
+  componentDidMount() {
+    axios.get(this.state.apiUrl + 'jobs/')
+      .then((response) => {
+      this.setState({
+        allJobs: response.data
+      });
+    });
   }
   
   render() {
     return (
       <div className="jobApp">
-        <JobResultsList></JobResultsList>
+        <JobResultsList data={this.state.allJobs}></JobResultsList>
       </div>
     );
   }
