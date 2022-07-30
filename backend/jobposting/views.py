@@ -62,3 +62,11 @@ class LocationsInCity(APIView):
         queryset = self.queryset.filter(city=city)
         serializer = LocationSerializer(queryset, many=True)
         return Response(data=serializer.data)
+
+class JobByID(APIView):
+    queryset = Job.objects.all()
+
+    def get(self, request, job_id):
+        queryset = self.queryset.filter(job_id=job_id)
+        serializer = JobSerializer(queryset)
+        return Response(data=serializer.data)

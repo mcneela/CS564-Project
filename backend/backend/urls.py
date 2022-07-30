@@ -20,7 +20,8 @@ from jobposting import views
 from jobposting.views import (
     LocationsInCity,
     LocationsInState,
-    LocationsInCountry
+    LocationsInCountry,
+    JobByID
 )
 
 router = routers.DefaultRouter()
@@ -35,5 +36,6 @@ urlpatterns = [
     path('api/v1/', include(router.urls)),
     path('api/v1/locations/city/<str:city>/', LocationsInCity.as_view()),
     path('api/v1/locations/state/<str:state>/', LocationsInState.as_view()),
-    path('api/v1/locations/country/<str:country>/', LocationsInCountry.as_view())
+    path('api/v1/locations/country/<str:country>/', LocationsInCountry.as_view()),
+    path('api/v1/jobs/<int:job_id>/', JobByID.as_view())
 ]
