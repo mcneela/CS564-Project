@@ -27,7 +27,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="jobApp">
-        <JobResultsList data={this.state.allJobs}></JobResultsList>
+        <JobResultsList data={this.state.allJobs} />
       </div>
     );
   }
