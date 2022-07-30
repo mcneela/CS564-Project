@@ -45,6 +45,16 @@ export default function JobResultsList(props) {
                     posted_by,
                     located_in
                   } = value;
+                  var location = '';
+                  if (located_in.city != null && located_in.city != '') {
+                    location += located_in.city + ', ';
+                  }
+                  if (located_in.state != null && located_in.state != '') {
+                    location += located_in.state + ', ';
+                  }
+                  if (located_in.country!= null && located_in.country != '') {
+                    location += located_in.country;
+                  }
                   var salary_provided = true;
                   if (salary_min == null || salary_max == null) {
                     salary_provided = false;
@@ -62,7 +72,7 @@ export default function JobResultsList(props) {
                         <Outlet />
                       </TableCell>
                       <TableCell>{department}</TableCell>
-                      <TableCell>{`${located_in.city}, ${located_in.state}, ${located_in.country}`}</TableCell>
+                      <TableCell>{location}</TableCell>
                       {/* <TableCell>{`$${salary_min} to $${salary_max}` ? salary_provided : 'N/A'}</TableCell> */}
                     </TableRow>
                   );
