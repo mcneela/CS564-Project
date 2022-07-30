@@ -34,13 +34,23 @@ class SingleJobPage extends React.Component {
       return <div></div>
     }
     let job = this.state.jobData;
+    var location = '';
+    if (job.located_in.city != null && job.located_in.city != '') {
+      location += job.located_in.city + ', ';
+    }
+    if (job.located_in.state != null && job.located_in.state != '') {
+      location += job.located_in.state + ', ';
+    }
+    if (job.located_in.country!= null && job.located_in.country != '') {
+      location += job.located_in.country;
+    }
     return (
       <div>
         <h1>{job.title}</h1>
-        <h2>{`Location: ${job.located_in.city}, ${job.located_in.state}, ${job.located_in.country}`}</h2>
-        <p><b>Company:</b>{job.posted_by.profile}</p>
-        <p><b>Description:</b>{job.description}</p>
-        <p><b>Benefits:</b>{job.benefits}</p>
+        <h2>{`Location: ${location}`}</h2>
+        <p><b>Company: </b>{job.posted_by.profile}</p>
+        <p><b>Description: </b>{job.description}</p>
+        <p><b>Benefits: </b>{job.benefits}</p>
       </div>
     );
   }
