@@ -8,10 +8,6 @@ from jobposting.models import (
     Requirements,
 )
 
-class JobSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Job
-        fields = '__all__'
 
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
@@ -26,6 +22,16 @@ class IndustrySerializer(serializers.ModelSerializer):
 class LocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Location 
+        fields = '__all__'
+
+class JobSerializer(serializers.ModelSerializer):
+    located_in = LocationSerializer()
+    # location_city = serializers.RelatedField(source='located_in__city', read_only=True)
+    # location_state = serializers.CharField(source='located_in.state')
+    # location_country = serializers.CharField(source='located_in.country')
+
+    class Meta:
+        model = Job
         fields = '__all__'
 
 class RequirementsSerializer(serializers.ModelSerializer):

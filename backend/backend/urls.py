@@ -32,7 +32,7 @@ router.register(r'requirements', views.RequirementsViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/locations/', include(router.urls)),
+    path('api/v1/', include(router.urls)),
     path('api/v1/locations/city/<str:city>/', LocationsInCity.as_view()),
     path('api/v1/locations/state/<str:state>/', LocationsInState.as_view()),
     path('api/v1/locations/country/<str:country>/', LocationsInCountry.as_view())
