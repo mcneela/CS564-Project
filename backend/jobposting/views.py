@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework import generics
@@ -69,4 +70,21 @@ class JobByID(APIView):
     def get(self, request, job_id):
         queryset = self.queryset.filter(job_id=job_id)
         serializer = JobSerializer(queryset)
+        return Response(data=serializer.data)
+
+class SearchJobs(APIView):
+    queryset = Job.objects.all()
+
+    def get(self, request):
+        keywords = request.query_params.get('keywords')
+        city = request.query_params.get('city')
+        state = request.query_params.get('state')
+        country = request.query_params.get('country')
+        queryset = self.queryset.filter(
+            Q(title__icontains=keywords) |
+            Q(function__icontains=keywords) |
+            Q(benefits__icontains=keywords) |
+            Q(description__icontains=keywords)
+        )
+        serializer = JobSerializer(queryset, many=True)
         return Response(data=serializer.data)

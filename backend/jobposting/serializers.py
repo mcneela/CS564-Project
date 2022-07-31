@@ -20,6 +20,12 @@ class CompanySerializer(serializers.ModelSerializer):
         model = Company
         fields = '__all__'
 
+    def create(self, validated_data):
+        job = Job.objects.create(
+            **validated_data
+        )
+        return job
+
 class LocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Location 
