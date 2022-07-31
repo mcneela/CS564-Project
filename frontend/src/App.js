@@ -3,6 +3,7 @@ import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
 import JobResultsList from './components/JobResultsList.js';
 import SearchBar from './components/SearchBar.js'
+import SearchFilter from './components/SearchFilter.js';
 
 // allow cross origin requests for running locally
 axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -49,6 +50,7 @@ class App extends React.Component {
             <SearchBar setLoading={this.setLoading.bind(this)} 
                       setData={this.setData.bind(this)}
             />
+            <SearchFilter />
             <JobResultsList data={this.state.jobs} />
           </div>
         );
