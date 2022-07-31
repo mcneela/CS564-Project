@@ -8,7 +8,6 @@ import {
 import './index.css';
 import App from './App';
 import SingleJobPage from './components/SingleJobPage';
-import JobResultsList from './components/JobResultsList';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
