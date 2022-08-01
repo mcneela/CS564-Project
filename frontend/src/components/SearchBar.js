@@ -54,7 +54,6 @@ class SearchBar extends React.Component {
   // }
 
   search = (event) => {
-    console.log('hello!');
     event.preventDefault();
     this.setLoading(true);
     axios.get(this.state.apiUrl, { 
@@ -66,7 +65,6 @@ class SearchBar extends React.Component {
         loading: false,
         results: response.data
       });
-      console.log(response.data);
       this.setData(response.data);
       this.setLoading(false);
     });
