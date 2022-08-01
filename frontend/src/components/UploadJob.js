@@ -30,7 +30,7 @@ class UploadJob extends React.Component {
             </Grid>
         </Grid>
         <form >
-          <Grid container alignItems="center" justify="center" direction="column">
+          <Grid container spacing={1} alignItems="center" justify="center" direction="column">
             <Grid item>
               <TextField
                 id="job-title-input"
