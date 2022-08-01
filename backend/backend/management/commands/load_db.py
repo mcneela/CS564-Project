@@ -127,7 +127,7 @@ class Command(BaseCommand):
                         job=job_obj
                     )
                     req_list.append(requirements_obj)
-            Industry.objects.bulk_create(industry)
+            Industry.objects.bulk_create(industries)
             Company.objects.bulk_create(companies)
             Location.objects.bulk_create(locations)
             Job.objects.bulk_create(jobs)
