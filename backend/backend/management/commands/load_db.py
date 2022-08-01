@@ -127,10 +127,10 @@ class Command(BaseCommand):
                         job=job_obj
                     )
                     req_list.append(requirements_obj)
-            Requirements.objects.bulk_create(req_list)
-            Location.objects.bulk_create(locations)
             Industry.objects.bulk_create(industry)
-            Job.objects.bulk_create(jobs)
             Company.objects.bulk_create(companies)
+            Location.objects.bulk_create(locations)
+            Job.objects.bulk_create(jobs)
+            Requirements.objects.bulk_create(req_list)
 
 print("Loaded database successfully!")
