@@ -10,13 +10,16 @@ import RadioGroup from "@mui/material/RadioGroup";
 import Radio from "@mui/material/Radio";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import Slider from "@mui/material/Slider";
 import Button from "@mui/material/Button";
 import Typography from '@mui/material/Typography';
 
 class UploadJob extends React.Component {
   constructor(props) {
     super();
+    this.state = {
+      title: '',
+
+    }
   }
 
   render() {
@@ -38,21 +41,27 @@ class UploadJob extends React.Component {
                 label="Job Title"
                 type="text"
               />
-            </Grid>
-            <Grid item>
               <TextField
                 id="job-function-input"
                 name="jobFunction"
                 label="Job Function"
                 type="text"
               />
-            </Grid>
-            <Grid item>
               <TextField
                 id="job-department-input"
                 name="jobDepartment"
                 label="Department"
                 type="text"
+              />
+            </Grid>
+            <Grid item>
+              <TextField
+                id="profile-input"
+                name="companyProfile"
+                label="Company Profile"
+                type="text"
+                multiline={true}
+                minRows={5}
               />
             </Grid>
             <Grid item>
@@ -64,8 +73,6 @@ class UploadJob extends React.Component {
                 multiline={true}
                 minRows={5}
               />
-            </Grid>
-            <Grid item>
               <TextField
                 id="job-benefits-input"
                 name="jobBenefits"
@@ -74,8 +81,42 @@ class UploadJob extends React.Component {
                 multiline={true}
                 minRows={5}
               />
+              <TextField
+                id="experience-input"
+                name="jobExperience"
+                label="Required Experience"
+                type="text"
+                multiline={true}
+                minRows={5}
+              />
             </Grid>
             <Grid item>
+              <TextField
+                id="city-input"
+                name="city"
+                label="City"
+                type="text"
+              />
+              <TextField
+                id="state-input"
+                name="state"
+                label="State"
+                type="text"
+              />
+              <TextField
+                id="country-input"
+                name="country"
+                label="Country"
+                type="text"
+              />
+            </Grid>
+            <Grid item>
+              <TextField
+                id="industry-input"
+                name="industry"
+                label="Industry"
+                type="text"
+              />
               <FormControl>
                 <FormLabel>Required Education</FormLabel>
                 <Select
@@ -121,8 +162,6 @@ class UploadJob extends React.Component {
                     />
                 </RadioGroup>
               </FormControl>
-            </Grid>
-            <Grid item>
               <FormControl>
                 <FormLabel>Job Type</FormLabel>
                   <RadioGroup
