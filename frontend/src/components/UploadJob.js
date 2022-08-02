@@ -12,14 +12,125 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import Typography from '@mui/material/Typography';
+import { EventRepeat } from '@mui/icons-material';
 
 class UploadJob extends React.Component {
   constructor(props) {
     super();
     this.state = {
       title: '',
+      function: '',
+      department: '',
+      profile: '',
+      description: '',
+      benefits: '',
+      experience: '',
+      city: '',
+      state: '',
+      country: '',
+      industry: '',
+      education: '',
+      telecommuting: '',
+      jobType: '',
+    };
+  }
 
-    }
+  changeTitle = (event) => {
+    event.preventDefault();
+    this.setState({
+      title: event.target.value
+    });
+  }
+
+  changeFunction = (event) => {
+    event.preventDefault();
+    this.setState({
+      function: event.target.value
+    });
+  }
+  
+  changeDepartment = (event) => {
+    event.preventDefault();
+    this.setState({
+      department: event.target.value
+    });
+  }
+  
+  changeProfile = (event) => {
+    event.preventDefault();
+    this.setState({
+      profile: event.target.value
+    });
+  }
+
+  changeDescription = (event) => {
+    event.preventDefault();
+    this.setState({
+      description: event.target.value
+    });
+  }
+  
+  changeBenefits = (event) => {
+    event.preventDefault();
+    this.setState({
+      benefits: event.target.value
+    });
+  }
+  
+  changeExperience = (event) => {
+    event.preventDefault();
+    this.setState({
+      experience: event.target.value
+    });
+  }
+
+  changeCity = (event) => {
+    event.preventDefault();
+    this.setState({
+      city: event.target.value
+    });
+  }
+  
+  changeState = (event) => {
+    event.preventDefault();
+    this.setState({
+      state: event.target.value
+    });
+  }
+  
+  changeCountry = (event) => {
+    event.preventDefault();
+    this.setState({
+      country: event.target.value
+    });
+  }
+
+  changeIndustry = (event) => {
+    event.preventDefault();
+    this.setState({
+      industry: event.target.value
+    });
+  }
+
+  changeEducation = (event) => {
+    event.preventDefault();
+    this.setState({
+      education: event.target.value
+    });
+  }
+  
+  changeTelecommuting = (event) => {
+    event.preventDefault();
+    this.setState({
+      telecommuting: event.target.value
+    });
+  }
+  
+  changeJobType = (event) => {
+    event.preventDefault();
+    this.setState({
+      jobType: event.target.value
+    });
   }
 
   render() {
@@ -40,18 +151,22 @@ class UploadJob extends React.Component {
                 name="jobTitle"
                 label="Job Title"
                 type="text"
+                value={this.state.title}
+                onChange={this.changeTitle}
               />
               <TextField
                 id="job-function-input"
                 name="jobFunction"
                 label="Job Function"
                 type="text"
+                onChange={this.changeFunction}
               />
               <TextField
                 id="job-department-input"
                 name="jobDepartment"
                 label="Department"
                 type="text"
+                onChange={this.changeDepartment}
               />
             </Grid>
             <Grid item>
@@ -62,6 +177,7 @@ class UploadJob extends React.Component {
                 type="text"
                 multiline={true}
                 minRows={5}
+                onChange={this.changeProfile}
               />
             </Grid>
             <Grid item>
@@ -72,6 +188,7 @@ class UploadJob extends React.Component {
                 type="text"
                 multiline={true}
                 minRows={5}
+                onChange={this.changeDescription}
               />
               <TextField
                 id="job-benefits-input"
@@ -80,6 +197,7 @@ class UploadJob extends React.Component {
                 type="text"
                 multiline={true}
                 minRows={5}
+                onChange={this.changeBenefits}
               />
               <TextField
                 id="experience-input"
@@ -88,6 +206,7 @@ class UploadJob extends React.Component {
                 type="text"
                 multiline={true}
                 minRows={5}
+                onChange={this.changeExperience}
               />
             </Grid>
             <Grid item>
@@ -96,18 +215,21 @@ class UploadJob extends React.Component {
                 name="city"
                 label="City"
                 type="text"
+                onChange={this.changeCity}
               />
               <TextField
                 id="state-input"
                 name="state"
                 label="State"
                 type="text"
+                onChange={this.changeState}
               />
               <TextField
                 id="country-input"
                 name="country"
                 label="Country"
                 type="text"
+                onChange={this.changeCountry}
               />
             </Grid>
             <Grid item>
@@ -116,13 +238,13 @@ class UploadJob extends React.Component {
                 name="industry"
                 label="Industry"
                 type="text"
+                onChange={this.changeIndustry}
               />
               <FormControl>
                 <FormLabel>Required Education</FormLabel>
                 <Select
                   name="Required Education"
-                  // value={formValues.os}
-                  // onChange={handleInputChange}
+                  onChange={this.changeEducation}
                 >
                   <MenuItem key="High School" value="highSchool">
                     High School
@@ -140,12 +262,10 @@ class UploadJob extends React.Component {
               </FormControl>
             </Grid>
             <Grid item>
-              <FormControl>
+              <FormControl onChange={this.changeTelecommuting}>
                 <FormLabel>Telecommuting Allowed?</FormLabel>
                 <RadioGroup
                   name="telecommuting"
-                  // value={formValues.gender}
-                  // onChange={handleInputChange}
                   row
                 >
                     <FormControlLabel
@@ -162,12 +282,10 @@ class UploadJob extends React.Component {
                     />
                 </RadioGroup>
               </FormControl>
-              <FormControl>
+              <FormControl onChange={this.changeJobType}>
                 <FormLabel>Job Type</FormLabel>
                   <RadioGroup
                     name="type"
-                    // value={formValues.gender}
-                    // onChange={handleInputChange}
                     row
                   >
                     <FormControlLabel
@@ -178,15 +296,15 @@ class UploadJob extends React.Component {
                     />
                     <FormControlLabel
                       key="part-time"
-                      value="partTime"
+                      value="Part-time"
                       control={<Radio size="small" />}
-                      label="Part-Time"
+                      label="Part-time"
                     />
                     <FormControlLabel
                       key="full-time"
-                      value="fullTime"
+                      value="Full-time"
                       control={<Radio size="small" />}
-                      label="Full-Time"
+                      label="Full-time"
                     />
                   </RadioGroup>
               </FormControl>
