@@ -1,5 +1,7 @@
+import json
 from django.db.models import Q
 from django.shortcuts import render
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework.response import Response
@@ -88,3 +90,16 @@ class SearchJobs(APIView):
         )
         serializer = JobSerializer(queryset, many=True)
         return Response(data=serializer.data)
+
+class CreateJob(APIView):
+    def post(self, request):
+        # print(request.data['job'])
+        print(request.data['job'])
+        jserializer = JobSerializer(data=json.loads(request.data['job']))
+        print(jserializer.is_valid())
+        if jserializer.is_valid():
+            jserializer.save()
+            return Response(data=jserializer.data, status=status.HTTP_200_OK)
+        # rserializer = RequirementsSerializer(job=)
+        else:
+            return Response(data=jserializer.errors, status=status.HTTP_400_BAD_REQUEST)
