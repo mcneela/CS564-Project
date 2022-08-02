@@ -100,5 +100,4 @@ class Command(BaseCommand):
             Location.objects.bulk_create(locations)
             Job.objects.bulk_create(jobs)
             Requirements.objects.bulk_create(req_list)
-
-print("Loaded database successfully!")
+    print("Loaded database successfully!")
