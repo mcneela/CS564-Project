@@ -46,7 +46,6 @@ class Command(BaseCommand):
                     function,
                     fraudulent
                 ) = row
-                # industry_obj, created = Industry.objects.get_or_create(name=industry)
                 industry_obj = Industry(name=industry)
                 industries.append(industry_obj)
                 company_obj = Company(
@@ -55,21 +54,11 @@ class Command(BaseCommand):
                     industry=industry_obj
                 )
                 companies.append(company_obj)
-                # company_obj, created = Company.objects.get_or_create(
-                #     profile=company_profile.strip(),
-                #     has_logo=bool(has_company_logo),
-                #     industry=industry_obj
-                # )
                 try:
                     country, state, city = location.split(",")
                     country, state, city = country.strip(), state.strip(), city.strip()
                 except:
                     country, state, city = None, None, None
-                # location_obj, created = Location.objects.get_or_create(
-                #     city=city,
-                #     state=state,
-                #     country=country
-                # )
                 location_obj = Location(
                     city=city,
                     state=state,
@@ -96,29 +85,8 @@ class Command(BaseCommand):
                     located_in=location_obj
                 )
                 jobs.append(job_obj)
-                # job_obj, created = Job.objects.get_or_create(
-                #     title=title.strip(),
-                #     function=function.strip(),
-                #     salary_min=salary_min,
-                #     salary_max=salary_max,
-                #     department=department.strip(),
-                #     benefits=benefits.strip(),
-                #     description=description.strip(),
-                #     fraudulent=bool(fraudulent),
-                #     telecommuting=bool(telecommuting),
-                #     has_question=bool(has_questions),
-                #     posted_by=company_obj,
-                #     located_in=location_obj
-                # )
                 if not job_obj.job_id in used_job_ids:
                     used_job_ids[job_obj.job_id] = True
-                    # requirements_obj, created = Requirements.objects.get_or_create(
-                    #     description=requirements.strip(),
-                    #     education=required_education.strip(),
-                    #     experience=required_experience.strip(),
-                    #     employment_type=employment_type.strip(),
-                    #     job=job_obj
-                    # )
                     requirements_obj = Requirements(
                         description=requirements.strip(),
                         education=required_education.strip(),
