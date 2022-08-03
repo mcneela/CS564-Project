@@ -16,6 +16,9 @@ class SearchFilter extends React.Component  {
       city: '',
       state: '',
       country: '',
+      allCities: [],
+      allStates: [],
+      allCountries: [],
       allLocations: [],
       apiUrl: 'http://127.0.0.1:8000/api/v1/locations/',
     };
@@ -41,10 +44,22 @@ class SearchFilter extends React.Component  {
   // };
 
   componentDidMount() {
-      axios.get(this.state.apiUrl)
+    axios.get(this.state.apiUrl)
       .then((response) => {
         this.setState({
           allLocations: response.data,
+      });
+      var allStates = response.data.filter((v,i,a)=>a.findIndex(v2=>(v.state === v2.state))===i).sort();
+      this.setState({
+        allStates: allStates
+      });
+      var allCities = response.data.filter((v,i,a)=>a.findIndex(v2=>(v.city === v2.city))===i).sort();
+      this.setState({
+        allCities: allCities
+      });
+      var allCountries = response.data.filter((v,i,a)=>a.findIndex(v2=>(v.country === v2.country))===i).sort();
+      this.setState({
+        allCountries: allCountries
       });
     });
   };
@@ -73,7 +88,7 @@ class SearchFilter extends React.Component  {
                 })
               } */}
               {
-                this.state.allLocations.map(loc => {
+                this.state.allCities.map(loc => {
                   return <MenuItem value={loc.city}>{loc.city}</MenuItem>;
                 })
               }
@@ -89,7 +104,7 @@ class SearchFilter extends React.Component  {
               onChange={this.changeState}
             >
               {
-                this.state.allLocations.map(loc => {
+                this.state.allStates.map(loc => {
                   return <MenuItem value={loc.state}>{loc.state}</MenuItem>;
                 })
               }
@@ -105,7 +120,7 @@ class SearchFilter extends React.Component  {
               onChange={this.changeCountry}
             >
               {
-                this.state.allLocations.map(loc => {
+                this.state.allCountries.map(loc => {
                   return <MenuItem value={loc.country}>{loc.country}</MenuItem>;
                 })
               }
