@@ -76,6 +76,30 @@ class JobByID(APIView):
         serializer = JobSerializer(queryset)
         return Response(data=serializer.data)
 
+class FilterJobsByCity(APIView):
+    queryset = Job.objects.all()
+
+    def get(self, request, city):
+        queryset = self.queryset.filter(located_in__city=city)
+        serializer = JobSerializer(queryset, many=True)
+        return Response(data=serializer.data)
+
+class FilterJobsByState(APIView):
+    queryset = Job.objects.all()
+
+    def get(self, request, state):
+        queryset = self.queryset.filter(located_in__state=state)
+        serializer = JobSerializer(queryset, many=True)
+        return Response(data=serializer.data)
+
+class FilterJobsByCountry(APIView):
+    queryset = Job.objects.all()
+
+    def get(self, request, country):
+        queryset = self.queryset.filter(located_in__country=country)
+        serializer = JobSerializer(queryset, many=True)
+        return Response(data=serializer.data)
+
 class SearchJobs(APIView):
     queryset = Job.objects.all()
 
