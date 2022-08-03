@@ -43,39 +43,6 @@ class App extends React.Component {
       jobs: results
     });
   }
-
-  changeCity = (event) => {
-    let city = event.target.value;
-    let jobs = this.state.jobs.filter(function(job) {
-      return job.city === city;
-    });
-    this.setState({
-      city: city,
-      jobs: jobs,
-    });
-  }
-  
-  changeState = (event) => {
-    let state = event.target.value;
-    let jobs = this.state.jobs.filter(function(job) {
-      return job.state === state;
-    });
-    this.setState({
-      state: state,
-      jobs: jobs,
-    });
-  }
-  
-  changeCountry = (event) => {
-    let country = event.target.value;
-    let jobs = this.state.jobs.filter(function(job) {
-      return job.country === country;
-    });
-    this.setState({
-      country: country,
-      jobs: jobs,
-    });
-  }
   
   render() {
     if (this.state.loading) {
@@ -86,9 +53,7 @@ class App extends React.Component {
             <SearchBar setLoading={this.setLoading.bind(this)} 
                       setData={this.setData.bind(this)}
             />
-            <SearchFilter changeCity={this.changeCity.bind(this)}
-                          changeState={this.changeState.bind(this)}
-                          changeCountry={this.changeCountry.bind(this)}
+            <SearchFilter setData={this.setData.bind(this)}
                           setLoading={this.setLoading.bind(this)}/>
             <JobResultsList data={this.state.jobs} />
           </div>
