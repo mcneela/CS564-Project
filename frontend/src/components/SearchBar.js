@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-// import { withStyles } from '@material-ui/core/styles';
+import Button from "@mui/material/Button";
+import {withRouter} from './withRouter.js';
+
 
 const styles = theme => ({
   root: {
@@ -42,17 +44,13 @@ class SearchBar extends React.Component {
     }
     this.setData = props.setData;
     this.setLoading = props.setLoading;
+    this.directTo =this.directTo.bind(this);
   }
 
-  // static getDerivedStateFromProps(props, state) {
-  //   if (props.modelUrl !== state.modelUrl) {
-  //     return {
-  //       modelUrl: props.modelUrl,
-  //     }
-  //   }
-  //   return {}
-  // }
-
+  directTo() {
+    this.props.navigate('/upload');
+  }
+  
   search = (event) => {
     event.preventDefault();
     this.setLoading(true);
@@ -91,9 +89,12 @@ class SearchBar extends React.Component {
               <button type="submit">Search</button>
             </form>
           </div>
+          <div style={{float: 'right', marginRight: '10px'}}>
+            <Button onClick={this.directTo} variant="contained">Upload Job</Button>
+          </div>
         </div>
     );
   }
 }
  
-export default SearchBar;
+export default withRouter(SearchBar);

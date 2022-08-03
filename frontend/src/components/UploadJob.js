@@ -12,7 +12,6 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import Typography from '@mui/material/Typography';
-import { EventRepeat } from '@mui/icons-material';
 
 class UploadJob extends React.Component {
   constructor(props) {

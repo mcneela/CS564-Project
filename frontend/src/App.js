@@ -5,9 +5,6 @@ import JobResultsList from './components/JobResultsList.js';
 import SearchBar from './components/SearchBar.js'
 import SearchFilter from './components/SearchFilter.js';
 
-// allow cross origin requests for running locally
-// axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-
 class App extends React.Component {
   constructor() {
     super();
@@ -51,7 +48,7 @@ class App extends React.Component {
         return (
           <div className="jobApp">
             <SearchBar setLoading={this.setLoading.bind(this)} 
-                      setData={this.setData.bind(this)}
+                       setData={this.setData.bind(this)}
             />
             <SearchFilter setData={this.setData.bind(this)}
                           setLoading={this.setLoading.bind(this)}/>
