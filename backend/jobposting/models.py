@@ -4,7 +4,7 @@ from django.db import models
 
 class Industry(models.Model):
     industry_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=32)
+    name = models.CharField(max_length=64)
 
 class Company(models.Model):
     company_id = models.AutoField(primary_key=True)
@@ -14,17 +14,17 @@ class Company(models.Model):
 
 class Location(models.Model):
     location_id = models.AutoField(primary_key=True)
-    city = models.CharField(max_length=24, null=True)
-    state = models.CharField(max_length=24, null=True)
-    country = models.CharField(max_length=24, null=True)
+    city = models.CharField(max_length=256, null=True)
+    state = models.CharField(max_length=256, null=True)
+    country = models.CharField(max_length=256, null=True)
 
 class Job(models.Model):
     job_id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=64)
+    title = models.CharField(max_length=256)
     function = models.CharField(max_length=64)
     salary_min = models.IntegerField(null=True)
     salary_max = models.IntegerField(null=True)
-    department = models.CharField(max_length=64)
+    department = models.CharField(max_length=256)
     benefits = models.TextField()
     description = models.TextField()
     fraudulent = models.BooleanField(default=False)
@@ -35,7 +35,7 @@ class Job(models.Model):
 
 class Requirements(models.Model):
     description = models.TextField()
-    education = models.CharField(max_length=24)
-    experience = models.CharField(max_length=24)
-    employment_type = models.CharField(max_length=24)
+    education = models.CharField(max_length=64)
+    experience = models.CharField(max_length=64)
+    employment_type = models.CharField(max_length=64)
     job = models.OneToOneField(Job, on_delete=models.CASCADE, primary_key=True)
