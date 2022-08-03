@@ -9,9 +9,7 @@ import Select from '@mui/material/Select';
 class SearchFilter extends React.Component  {
   constructor(props) {
     super();
-    this.changeCity = props.changeCity;
-    this.changeState = props.changeState;
-    this.changeCountry = props.changeCountry;
+    this.setData = props.setData;
     this.state = {
       city: '',
       state: '',
@@ -25,23 +23,44 @@ class SearchFilter extends React.Component  {
 
   }
 
-  // changeCity = (event) => {
-  //   this.setState({
-  //     city: event.target.value
-  //   });
-  // };
-
-  // changeState = (event) => {
-  //   this.setState({
-  //     state: event.target.value
-  //   });
-  // };
+  changeCity = (event) => {
+    event.preventDefault();
+    this.setState({
+      city: event.target.value,
+      state: '',
+      country: ''
+    })
+    axios.get('http://127.0.0.1:8000/api/v1/jobs/location/city/' + event.target.value)
+      .then((response) => {
+        this.setData(response.data);
+      });
+  };
   
-  // changeCountry = (event) => {
-  //   this.setState({
-  //     country: event.target.value
-  //   });
-  // };
+  changeState = (event) => {
+    event.preventDefault();
+    this.setState({
+      city: '',
+      state: event.target.value, 
+      country: ''
+    })
+    axios.get('http://127.0.0.1:8000/api/v1/jobs/location/state/' + event.target.value)
+      .then((response) => {
+        this.setData(response.data);
+      });
+  };
+  
+  changeCountry = (event) => {
+    event.preventDefault();
+    this.setState({
+      city: '',
+      state: '', 
+      country: event.target.value 
+    })
+    axios.get('http://127.0.0.1:8000/api/v1/jobs/location/country/' + event.target.value)
+      .then((response) => {
+        this.setData(response.data);
+      });
+  };
 
   componentDidMount() {
     axios.get(this.state.apiUrl)
@@ -78,15 +97,6 @@ class SearchFilter extends React.Component  {
               label="city"
               onChange={this.changeCity}
             >
-              {/* {
-                this.state.allLocations.sort(function(a, b) {
-                  if (a !== null || b !== null) {
-                    var textA = a.city.toLowerCase();
-                    var textB = b.city.toLowerCase();
-                    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-                  }
-                })
-              } */}
               {
                 this.state.allCities.map(loc => {
                   return <MenuItem value={loc.city}>{loc.city}</MenuItem>;
