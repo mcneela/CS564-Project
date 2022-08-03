@@ -6,7 +6,7 @@ import SearchBar from './components/SearchBar.js'
 import SearchFilter from './components/SearchFilter.js';
 
 // allow cross origin requests for running locally
-axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+// axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 class App extends React.Component {
   constructor() {

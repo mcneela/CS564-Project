@@ -18,11 +18,13 @@ class UploadJob extends React.Component {
   constructor(props) {
     super();
     this.state = {
+      apiUrl: 'http://127.0.0.1:8000/api/v1/create/job/',
       title: '',
       function: '',
       department: '',
       profile: '',
       description: '',
+      reqDescription: '',
       benefits: '',
       experience: '',
       city: '',
@@ -130,6 +132,44 @@ class UploadJob extends React.Component {
     event.preventDefault();
     this.setState({
       jobType: event.target.value
+    });
+  }
+
+  submitJob = (event) => {
+    event.preventDefault();
+    axios.post(this.state.apiUrl, {
+      job: {
+        title: this.state.title,
+        description: this.state.description,
+        function: this.state.function,
+        salary_min: null,
+        salary_max: null,
+        department: this.state.department,
+        telecommuting: this.state.telecommuting,
+        fraudulent: 0,
+        has_question: 0, 
+      },
+      reqs: {
+        description: this.state.reqDescription,
+        education: this.state.education,
+        experience: this.state.experience,
+        employment_type: this.state.jobType,
+      },
+      location: {
+        city: this.state.city,
+        state: this.state.state,
+        country: this.state.country
+      },
+      company: {
+        profile: this.state.profile,
+        has_logo: 0, 
+      },
+      industry: {
+        name: this.state.industry
+      }
+    })
+      .then((response) => {
+        console.log(response.status);
     });
   }
 
@@ -270,13 +310,13 @@ class UploadJob extends React.Component {
                 >
                     <FormControlLabel
                       key="true"
-                      value="true"
+                      value={1}
                       control={<Radio size="small" />}
                       label="Yes"
                     />
                     <FormControlLabel
                       key="false"
-                      value="false"
+                      value={0}
                       control={<Radio size="small" />}
                       label="No"
                     />
@@ -309,7 +349,7 @@ class UploadJob extends React.Component {
                   </RadioGroup>
               </FormControl>
             </Grid>
-            <Button variant="contained" color="primary" type="submit">
+            <Button onClick={this.submitJob}>
               Submit
             </Button>
           </Grid>
