@@ -119,12 +119,11 @@ class SearchJobs(APIView):
 
 class CreateJob(APIView):
     def post(self, request):
-        try:
-            location, created = Location.objects.get_or_create(**json.loads(request.data['location']))
-            industry, created = Industry.objects.get_or_create(**json.loads(request.data['industry']))
-            company, created = Company.objects.get_or_create(industry=industry, **json.loads(request.data['company']))
-            job, created = Job.objects.get_or_create(located_in=location, posted_by=company, **json.loads(request.data['job']))
-            reqs, created = Requirements.objects.get_or_create(job=job, **json.loads(request.data['reqs']))
-            return Response(data=model_to_dict(job), status=status.HTTP_200_OK)
-        except:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+        location, created = Location.objects.get_or_create(**request.data['location'])
+        industry, created = Industry.objects.get_or_create(**request.data['industry'])
+        company, created = Company.objects.get_or_create(industry=industry, **request.data['company'])
+        job, created = Job.objects.get_or_create(located_in=location, posted_by=company, **request.data['job'])
+        reqs, created = Requirements.objects.get_or_create(job=job, **request.data['reqs'])
+        return Response(data=model_to_dict(job), status=status.HTTP_200_OK)
+        # except:
+        #     return Response(status=status.HTTP_400_BAD_REQUEST)
