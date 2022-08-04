@@ -26,7 +26,8 @@ from jobposting.views import (
     CreateJob,
     FilterJobsByCity,
     FilterJobsByState,
-    FilterJobsByCountry
+    FilterJobsByCountry,
+    RequirementsByID,
 )
 
 router = routers.DefaultRouter()
@@ -48,4 +49,5 @@ urlpatterns = [
     path('api/v1/jobs/location/country/<str:country>', FilterJobsByCountry.as_view()),
     path('api/v1/create/job/', CreateJob.as_view()),
     path('api/v1/search/jobs/', SearchJobs.as_view()),
+    path('api/v1/requirements/<int:job_id>/', RequirementsByID.as_view()),
 ]

@@ -44,6 +44,14 @@ class RequirementsViewSet(viewsets.ModelViewSet):
     queryset = Requirements.objects.all()
     serializer_class = RequirementsSerializer
 
+class RequirementsByID(APIView):
+    queryset = Requirements.objects.all()
+
+    def get(self, request, job_id):
+        queryset = self.queryset.filter(job_id=job_id)
+        serializer = RequirementsSerializer(queryset)
+        return Response(data=serializer.data)
+
 class LocationsInState(APIView):
     queryset = Location.objects.all()
     
