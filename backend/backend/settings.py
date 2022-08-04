@@ -27,7 +27,10 @@ DEBUG = True
 
 CORS_ORIGIN_ALLOW_ALL = True
 ALLOWED_HOSTS = ['*']
-
+CSRF_TRUSTED_ORIGINS = [
+        'http://127.0.0.1:3000/upload',
+    ]
+# CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
 
