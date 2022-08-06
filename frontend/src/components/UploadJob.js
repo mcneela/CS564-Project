@@ -1,6 +1,7 @@
 import * as React from 'react';
 import axios from 'axios';
 
+import { Box } from '@mui/material';
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -12,12 +13,26 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 class UploadJob extends React.Component {
   constructor(props) {
     super();
     this.state = {
       apiUrl: 'http://127.0.0.1:8000/api/v1/create/job/',
+      predictUrl: 'http://127.0.0.1:8000/api/v1/predict-fraud/',
       title: '',
       function: '',
       department: '',
@@ -33,6 +48,7 @@ class UploadJob extends React.Component {
       education: '',
       telecommuting: '',
       jobType: '',
+      potentialFraud: false,
     };
   }
 
@@ -136,45 +152,79 @@ class UploadJob extends React.Component {
 
   submitJob = (event) => {
     event.preventDefault();
-    axios.post(this.state.apiUrl, {
-      job: {
-        title: this.state.title,
-        description: this.state.description,
-        function: this.state.function,
-        salary_min: null,
-        salary_max: null,
-        department: this.state.department,
-        telecommuting: this.state.telecommuting,
-        fraudulent: 0,
-        has_question: 0, 
-      },
-      reqs: {
-        description: this.state.reqDescription,
-        education: this.state.education,
-        experience: this.state.experience,
-        employment_type: this.state.jobType,
-      },
-      location: {
-        city: this.state.city,
-        state: this.state.state,
-        country: this.state.country
-      },
-      company: {
-        profile: this.state.profile,
-        has_logo: 0, 
-      },
-      industry: {
-        name: this.state.industry
+    axios.get(this.state.predictUrl, {
+      title: this.state.title,
+      description: this.state.description,
+      requirements: this.state.reqDescription,
+    }).then((response) => {
+      if (response.data === 1) {
+        this.setState({
+          potentialFraud: true,
+        });
+        return;
       }
-    })
-      .then((response) => {
-        console.log(response.status);
+      axios.post(this.state.apiUrl, {
+        job: {
+          title: this.state.title,
+          description: this.state.description,
+          function: this.state.function,
+          salary_min: null,
+          salary_max: null,
+          department: this.state.department,
+          telecommuting: this.state.telecommuting,
+          fraudulent: 0,
+          has_question: 0, 
+        },
+        reqs: {
+          description: this.state.reqDescription,
+          education: this.state.education,
+          experience: this.state.experience,
+          employment_type: this.state.jobType,
+        },
+        location: {
+          city: this.state.city,
+          state: this.state.state,
+          country: this.state.country
+        },
+        company: {
+          profile: this.state.profile,
+          has_logo: 0, 
+        },
+        industry: {
+          name: this.state.industry
+        }
+      })
+        .then((response) => {
+          console.log(response.status);
+      });
+    });
+  }
+
+  handleClose = (event) => {
+    event.preventDefault();
+    this.setState({
+      potentialFraud: false
     });
   }
 
   render() {
     return (
       <div>
+        <Modal
+          open={this.state.potentialFraud}
+          onClose={this.handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              We've detected potential fraud.
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              Please revise your job details and resubmit.
+            </Typography>
+          </Box>
+        </Modal>
         <Grid container alignItems="center" justify="center" direction="column">
             <Grid item>
               <Typography style={{ margin: 'auto' }} variant="h2" component="div" gutterBottom>
