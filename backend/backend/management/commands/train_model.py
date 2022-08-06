@@ -45,5 +45,9 @@ class Command(BaseCommand):
 
         pred = model.predict(test_X)
         print(classification_report(test_y, pred))
-        filename = 'finalized_model.sav'
-        pickle.dump(model, open(filename, 'wb'))
+
+        model_filename = 'model.pkl'
+        pickle.dump(model, open(model_filename, 'wb'))
+        
+        vec_filename = 'vectorizer.pkl'
+        pickle.dump(vectorizer, open(vec_filename, 'wb'))
