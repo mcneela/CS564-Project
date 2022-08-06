@@ -1,4 +1,5 @@
 import json
+import pickle
 from django.db.models import Q
 from django.forms import ValidationError
 from django.forms.models import model_to_dict
@@ -23,6 +24,8 @@ from jobposting.serializers import (
     RequirementsSerializer
 )
 # Create your views here.
+vectorizer = pickle.load(open('../vectorizer.pkl', 'rb'))
+model = pickle.load(open('../model.pkl', 'rb'))
 
 class JobViewSet(viewsets.ModelViewSet):
     queryset = Job.objects.all().order_by('job_id')
@@ -135,3 +138,14 @@ class CreateJob(APIView):
         return Response(data=model_to_dict(job), status=status.HTTP_200_OK)
         # except:
         #     return Response(status=status.HTTP_400_BAD_REQUEST)
+
+class PredictFraud(APIView):
+    def get(self, request):
+        title, description, requirements = (
+            request.get('title'),
+            request.get('description'),
+            request.get('requirements'),
+        )
+        X = vectorizer([f"{title} {description} {requirements}"])
+        pred = model.predict(X)
+        return Response(data=pred, status=status.HTTP_200_OK)
