@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
 import JobResultsList from './components/JobResultsList.js';
+import PaginatedItems from './components/JobResultsList.js';
 import SearchBar from './components/SearchBar.js'
 import SearchFilter from './components/SearchFilter.js';
 
@@ -52,7 +53,10 @@ class App extends React.Component {
             />
             <SearchFilter setData={this.setData.bind(this)}
                           setLoading={this.setLoading.bind(this)}/>
-            <JobResultsList data={this.state.jobs} />
+            {/* <JobResultsList data={this.state.jobs} /> */}
+            <div id="container">
+              <PaginatedItems data={this.state.jobs} itemsPerPage={10}/>
+            </div>
           </div>
         );
     }
