@@ -142,10 +142,10 @@ class CreateJob(APIView):
 class PredictFraud(APIView):
     def get(self, request):
         title, description, requirements = (
-            request.get('title'),
-            request.get('description'),
-            request.get('requirements'),
+            request.query_params.get('title'),
+            request.query_params.get('description'),
+            request.query_params.get('requirements'),
         )
-        X = vectorizer([f"{title} {description} {requirements}"])
+        X = vectorizer.transform([f"{title} {description} {requirements}"])
         pred = model.predict(X)
-        return Response(data=pred, status=status.HTTP_200_OK)
+        return Response(data=pred[0], status=status.HTTP_200_OK)
