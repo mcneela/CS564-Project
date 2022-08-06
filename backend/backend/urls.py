@@ -28,6 +28,7 @@ from jobposting.views import (
     FilterJobsByState,
     FilterJobsByCountry,
     RequirementsByID,
+    PredictFraud,
 )
 
 router = routers.DefaultRouter()
@@ -50,4 +51,5 @@ urlpatterns = [
     path('api/v1/create/job/', CreateJob.as_view()),
     path('api/v1/search/jobs/', SearchJobs.as_view()),
     path('api/v1/requirements/<int:job_id>/', RequirementsByID.as_view()),
+    path('api/v1/predict-fraud/', PredictFraud.as_view()),
 ]

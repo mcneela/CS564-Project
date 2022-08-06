@@ -24,8 +24,8 @@ from jobposting.serializers import (
     RequirementsSerializer
 )
 # Create your views here.
-vectorizer = pickle.load(open('../vectorizer.pkl', 'rb'))
-model = pickle.load(open('../model.pkl', 'rb'))
+vectorizer = pickle.load(open('vectorizer.pkl', 'rb'))
+model = pickle.load(open('model.pkl', 'rb'))
 
 class JobViewSet(viewsets.ModelViewSet):
     queryset = Job.objects.all().order_by('job_id')
