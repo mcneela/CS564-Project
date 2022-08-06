@@ -50,7 +50,7 @@ class Command(BaseCommand):
                 industries.append(industry_obj)
                 company_obj = Company(
                     profile=company_profile.strip(),
-                    has_logo=bool(has_company_logo),
+                    has_logo=bool(int(has_company_logo)),
                     industry=industry_obj
                 )
                 companies.append(company_obj)
@@ -78,9 +78,9 @@ class Command(BaseCommand):
                     department=department.strip(),
                     benefits=benefits.strip(),
                     description=description.strip(),
-                    fraudulent=bool(fraudulent),
-                    telecommuting=bool(telecommuting),
-                    has_question=bool(has_questions),
+                    fraudulent=bool(int(fraudulent)),
+                    telecommuting=bool(int(telecommuting)),
+                    has_question=bool(int(has_questions)),
                     posted_by=company_obj,
                     located_in=location_obj
                 )
