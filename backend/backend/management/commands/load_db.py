@@ -9,6 +9,8 @@ from jobposting.models import (
     Requirements
 )
 
+def make_hash(obj):
+    return tuple((k, v) for k, v in list(obj.__dict__.items())[1:])
 
 class Command(BaseCommand):
     help = 'Load a job posting csv file into the database'
@@ -20,6 +22,7 @@ class Command(BaseCommand):
         used_job_ids = {}
         path = kwargs['path']
         req_list, industries, companies, jobs, locations = [], [], [], [], []
+        industry_set, req_set, company_set, job_set, location_set = {}, {}, {}, {}, {}
         with open(path, 'r') as infile:
             reader = csv.reader(infile, delimiter=',')
             for i, row in enumerate(reader):
@@ -47,13 +50,21 @@ class Command(BaseCommand):
                     fraudulent
                 ) = row
                 industry_obj = Industry(name=industry)
-                industries.append(industry_obj)
+                if make_hash(industry_obj) in industry_set:
+                    industry_obj = industry_set[make_hash(industry_obj)]
+                else:
+                    industries.append(industry_obj)
+                    industry_set[make_hash(industry_obj)] = industry_obj
                 company_obj = Company(
                     profile=company_profile.strip(),
                     has_logo=bool(int(has_company_logo)),
                     industry=industry_obj
                 )
-                companies.append(company_obj)
+                if make_hash(company_obj) in company_set:
+                    company_obj = company_set[make_hash(company_obj)]
+                else:
+                    companies.append(company_obj)
+                    company_set[make_hash(company_obj)] = company_obj
                 try:
                     country, state, city = location.split(",")
                     country, state, city = country.strip(), state.strip(), city.strip()
@@ -64,7 +75,11 @@ class Command(BaseCommand):
                     state=state,
                     country=country
                 )
-                locations.append(location_obj)
+                if make_hash(location_obj) in location_set:
+                    location_obj = location_set[make_hash(location_obj)]
+                else:
+                    locations.append(location_obj)
+                    location_set[make_hash(location_obj)] = location_obj
                 try:
                     salary_min, salary_max = salary_range.split("-")
                     salary_min, salary_max = int(salary_min), int(salary_max) 
@@ -84,9 +99,11 @@ class Command(BaseCommand):
                     posted_by=company_obj,
                     located_in=location_obj
                 )
-                jobs.append(job_obj)
-                if not job_obj.job_id in used_job_ids:
-                    used_job_ids[job_obj.job_id] = True
+                if make_hash(job_obj) in job_set:
+                    job_obj = job_set[make_hash(job_obj)]
+                else:
+                    jobs.append(job_obj)
+                    job_set[make_hash(job_obj)] = job_obj
                     requirements_obj = Requirements(
                         description=requirements.strip(),
                         education=required_education.strip(),
@@ -94,7 +111,11 @@ class Command(BaseCommand):
                         employment_type=employment_type.strip(),
                         job=job_obj
                     )
-                    req_list.append(requirements_obj)
+                    if make_hash(requirements_obj) in req_set:
+                        requirements_obj = req_set[make_hash(requirements_obj)]
+                    else:
+                        req_set[make_hash(requirements_obj)] = requirements_obj
+                        req_list.append(requirements_obj)
             Industry.objects.bulk_create(industries)
             Company.objects.bulk_create(companies)
             Location.objects.bulk_create(locations)
