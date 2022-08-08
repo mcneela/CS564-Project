@@ -29,6 +29,7 @@ from jobposting.views import (
     FilterJobsByCountry,
     RequirementsByID,
     PredictFraud,
+    FilterByTelecommuting,
 )
 
 router = routers.DefaultRouter()
@@ -52,4 +53,5 @@ urlpatterns = [
     path('api/v1/search/jobs/', SearchJobs.as_view()),
     path('api/v1/requirements/<int:job_id>/', RequirementsByID.as_view()),
     path('api/v1/predict-fraud/', PredictFraud.as_view()),
+    path('api/v1/jobs/telecommuting/<int:t_or_f>/', FilterByTelecommuting.as_view()),
 ]

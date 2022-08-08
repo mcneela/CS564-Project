@@ -149,3 +149,12 @@ class PredictFraud(APIView):
         X = vectorizer.transform([f"{title} {description} {requirements}"])
         pred = model.predict(X)
         return Response(data=pred[0], status=status.HTTP_200_OK)
+
+class FilterByTelecommuting(APIView):
+    queryset = Job.objects.all()
+
+    def get(self, request, t_or_f):
+        truth_val = bool(t_or_f)
+        jobs = self.queryset.filter(telecommuting=truth_val)
+        serializer = JobSerializer(jobs, many=True)
+        return Response(data=serializer.data)
