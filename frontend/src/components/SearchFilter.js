@@ -30,7 +30,8 @@ class SearchFilter extends React.Component  {
     this.setState({
       city: event.target.value,
       state: '',
-      country: ''
+      country: '',
+      telecommute: null,
     })
     axios.get('http://127.0.0.1:8000/api/v1/jobs/location/city/' + event.target.value)
       .then((response) => {
@@ -43,7 +44,8 @@ class SearchFilter extends React.Component  {
     this.setState({
       city: '',
       state: event.target.value, 
-      country: ''
+      country: '',
+      telecommute: null,
     })
     axios.get('http://127.0.0.1:8000/api/v1/jobs/location/state/' + event.target.value)
       .then((response) => {
@@ -56,7 +58,8 @@ class SearchFilter extends React.Component  {
     this.setState({
       city: '',
       state: '', 
-      country: event.target.value 
+      country: event.target.value ,
+      telecommute: null,
     })
     axios.get('http://127.0.0.1:8000/api/v1/jobs/location/country/' + event.target.value)
       .then((response) => {
