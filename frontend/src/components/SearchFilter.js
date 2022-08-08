@@ -3,8 +3,9 @@ import axios from 'axios';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
+// import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { RadioGroup, Radio, FormControl, FormControlLabel, FormLabel, Grid } from '@mui/material';
 
 class SearchFilter extends React.Component  {
   constructor(props) {
@@ -14,6 +15,7 @@ class SearchFilter extends React.Component  {
       city: '',
       state: '',
       country: '',
+      telecommute: 0,
       allCities: [],
       allStates: [],
       allCountries: [],
@@ -62,6 +64,20 @@ class SearchFilter extends React.Component  {
       });
   };
 
+  changeTelecommute = (event) => {
+    event.preventDefault();
+    this.setState({
+      telecommute: event.target.value,
+      city: '',
+      state: '', 
+      country: '',
+    });
+    axios.get('http://127.0.0.1:8000/api/v1/jobs/telecommuting/' + event.target.value)
+      .then((response) => {
+        this.setData(response.data);
+      });
+  }
+
   componentDidMount() {
     axios.get(this.state.apiUrl)
       .then((response) => {
@@ -87,56 +103,85 @@ class SearchFilter extends React.Component  {
     return (
       <div>
         Filter By:
-        <Box sx={{ minWidth: 120 }}>
-          <FormControl style={{width: 100}}>
-            <InputLabel id="select-label1">City</InputLabel>
-            <Select
-              labelId="select-label1"
-              id="select1"
-              value={this.state.city}
-              label="city"
-              onChange={this.changeCity}
-            >
-              {
-                this.state.allCities.map(loc => {
-                  return <MenuItem value={loc.city}>{loc.city}</MenuItem>;
-                })
-              }
-            </Select>
-          </FormControl>
-          <FormControl style={{width: 100}}>
-            <InputLabel id="select-label2">State</InputLabel>
-            <Select
-              labelId="select-label2"
-              id="select2"
-              value={this.state.state}
-              label="state"
-              onChange={this.changeState}
-            >
-              {
-                this.state.allStates.map(loc => {
-                  return <MenuItem value={loc.state}>{loc.state}</MenuItem>;
-                })
-              }
-            </Select>
-          </FormControl>
-          <FormControl style={{width: 100}}>
-            <InputLabel id="select-label3">Country</InputLabel>
-            <Select
-              labelId="select-label3"
-              id="select3"
-              value={this.state.country}
-              label="country"
-              onChange={this.changeCountry}
-            >
-              {
-                this.state.allCountries.map(loc => {
-                  return <MenuItem value={loc.country}>{loc.country}</MenuItem>;
-                })
-              }
-            </Select>
-          </FormControl>
-        </Box>
+        <Grid spacing={1} alignItems="center" justify="center" direction="row">
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl style={{width: 100}}>
+              <InputLabel id="select-label1">City</InputLabel>
+              <Select
+                labelId="select-label1"
+                id="select1"
+                value={this.state.city}
+                label="city"
+                onChange={this.changeCity}
+              >
+                {
+                  this.state.allCities.map(loc => {
+                    return <MenuItem value={loc.city}>{loc.city}</MenuItem>;
+                  })
+                }
+              </Select>
+            </FormControl>
+            <FormControl style={{width: 100}}>
+              <InputLabel id="select-label2">State</InputLabel>
+              <Select
+                labelId="select-label2"
+                id="select2"
+                value={this.state.state}
+                label="state"
+                onChange={this.changeState}
+              >
+                {
+                  this.state.allStates.map(loc => {
+                    return <MenuItem value={loc.state}>{loc.state}</MenuItem>;
+                  })
+                }
+              </Select>
+            </FormControl>
+            <FormControl style={{width: 100}}>
+              <InputLabel id="select-label3">Country</InputLabel>
+              <Select
+                labelId="select-label3"
+                id="select3"
+                value={this.state.country}
+                label="country"
+                onChange={this.changeCountry}
+              >
+                {
+                  this.state.allCountries.map(loc => {
+                    return <MenuItem value={loc.country}>{loc.country}</MenuItem>;
+                  })
+                }
+              </Select>
+            </FormControl>
+            <FormControl style={{width:100}} onChange={this.changeTelecommute}>
+              <FormLabel>Telecommuting</FormLabel>
+              <RadioGroup>
+              <FormControlLabel
+                key="true"
+                value={1}
+                control={<Radio size="small" />}
+                label="Yes"
+                style={{
+                  float: 'left',
+                  clear: 'none',
+                  margin: '2px 0 0 2px',
+                }}
+              />
+              <FormControlLabel
+                key="false"
+                value={0}
+                control={<Radio size="small" />}
+                label="No"
+                style={{
+                  float: 'right',
+                  clear: 'none',
+                  margin: '2px 0 0 2px',
+                }}
+              />
+              </RadioGroup> 
+            </FormControl>
+          </Box>
+        </Grid>
       </div>
     );
   }
